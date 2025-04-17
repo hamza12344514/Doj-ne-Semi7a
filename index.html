@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>حاسبة الفقس والتحويل</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      direction: rtl;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 4px solid #388e3c;
+    }
+
+    .developer {
+      font-size: 14px;
+      margin-top: 5px;
+      color: #dcdcdc;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 30px auto;
+      background-color: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    label, select, input, button {
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    input, select {
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      margin-top: 20px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #c8e6c9;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    حاسبة تواريخ الفقس والتحويل
+    <div class="developer">المطور: حمدي</div>
+  </header>
+
+  <main>
+    <label for="eggType">نوع البيض:</label>
+    <select id="eggType">
+      <option value="dajaj">دجاج (21 يوم)</option>
+      <option value="roumi">دجاج رومي (28 يوم)</option>
+      <option value="saman">سمن (17 يوم)</option>
+      <option value="hajal">حجل (24 يوم)</option>
+      <option value="akhar">أخرى (أدخل عدد الأيام يدويًا)</option>
+    </select>
+
+    <div id="customDaysContainer" style="display: none;">
+      <label for="customDays">عدد أيام الفقس:</label>
+      <input type="number" id="customDays" min="1" placeholder="أدخل عدد الأيام">
+    </div>
+
+    <label for="entryDate">تاريخ دخول البيض للفقاسة:</label>
+    <input type="date" id="entryDate">
+
+    <button onclick="calculateDates()">احسب</button>
+
+    <div class="result" id="result" style="display:none;"></div>
+  </main>
+
+  <script>
+    const eggDays = {
+      dajaj: 21,
+      roumi: 28,
+      saman: 17,
+      hajal: 24
+    };
+
+    document.getElementById("eggType").addEventListener("change", function () {
+      const customContainer = document.getElementById("customDaysContainer");
+      customContainer.style.display = this.value === "akhar" ? "block" : "none";
+    });
+
+    function calculateDates() {
+      const type = document.getElementById("eggType").value;
+      const entryDateValue = document.getElementById("entryDate").value;
+      let daysToHatch;
+
+      if (!entryDateValue) {
+        alert("يرجى إدخال تاريخ الدخول.");
+        return;
+      }
+
+      if (type === "akhar") {
+        daysToHatch = parseInt(document.getElementById("customDays").value);
+        if (!daysToHatch || daysToHatch < 1) {
+          alert("يرجى إدخال عدد صحيح لأيام الفقس.");
+          return;
+        }
+      } else {
+        daysToHatch = eggDays[type];
+      }
+
+      const entryDate = new Date(entryDateValue);
+      const hatchDate = new Date(entryDate);
+      hatchDate.setDate(hatchDate.getDate() + daysToHatch);
+
+      const transferDate = new Date(hatchDate);
+      transferDate.setDate(hatchDate.getDate() - 3);
+
+      const format = (d) => d.toLocaleDateString("ar-EG");
+
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").innerHTML = `
+        <strong>تاريخ الفقس:</strong> ${format(hatchDate)}<br>
+        <strong>تاريخ تحويل البيض:</strong> ${format(transferDate)}
+      `;
+    }
+  </script>
+
+</body>
+</html>
