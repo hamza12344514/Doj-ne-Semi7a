@@ -2,35 +2,39 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>حاسبة الفقس والتحويل</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       direction: rtl;
-      background-color: #f9f9f9;
+      background-color: #f5f5f5;
       color: #333;
       margin: 0;
       padding: 0;
+      font-size: 18px;
     }
 
     header {
       background-color: #4CAF50;
       color: white;
-      padding: 20px;
+      padding: 20px 10px;
       text-align: center;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       border-bottom: 4px solid #388e3c;
     }
 
     .developer {
-      font-size: 14px;
-      margin-top: 5px;
-      color: #dcdcdc;
+      font-size: 22px;
+      margin-top: 10px;
+      color: #ffeb3b;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px #000;
     }
 
     main {
-      max-width: 600px;
+      max-width: 90%;
       margin: 30px auto;
       background-color: white;
       padding: 25px;
@@ -40,21 +44,21 @@
 
     label, select, input, button {
       display: block;
-      margin: 10px 0;
+      margin: 12px 0;
       width: 100%;
-      font-size: 16px;
+      font-size: 18px;
     }
 
     input, select {
-      padding: 8px;
-      border-radius: 5px;
+      padding: 10px;
+      border-radius: 6px;
       border: 1px solid #ccc;
     }
 
     button {
       background-color: #4CAF50;
       color: white;
-      padding: 10px;
+      padding: 12px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
@@ -71,6 +75,14 @@
       padding: 15px;
       border-radius: 8px;
       border: 1px solid #c8e6c9;
+      font-size: 18px;
+    }
+
+    .reminder {
+      margin-top: 15px;
+      color: #d84315;
+      font-weight: bold;
+      font-size: 18px;
     }
   </style>
 </head>
@@ -85,7 +97,7 @@
     <label for="eggType">نوع البيض:</label>
     <select id="eggType">
       <option value="dajaj">دجاج (21 يوم)</option>
-      <option value="roumi">دجاج رومي (28 يوم)</option>
+      <option value="roumi">داند (28 يوم)</option>
       <option value="saman">سمن (17 يوم)</option>
       <option value="hajal">حجل (24 يوم)</option>
       <option value="akhar">أخرى (أدخل عدد الأيام يدويًا)</option>
@@ -150,6 +162,7 @@
       document.getElementById("result").innerHTML = `
         <strong>تاريخ الفقس:</strong> ${format(hatchDate)}<br>
         <strong>تاريخ تحويل البيض:</strong> ${format(transferDate)}
+        <div class="reminder">رد بالك تنسى البيض ولا تنسى المكينة مسكرة 😅</div>
       `;
     }
   </script>
